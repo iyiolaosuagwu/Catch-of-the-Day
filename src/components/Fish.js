@@ -15,11 +15,11 @@ class Fish extends Component {
          <span>{formatPrice(price)}</span>
          </h5>
          <p> {desc} </p>
-         <button disabled={!isAvailable} > {isAvailable ? 'Add to Order' : 'Sold out!'} </button>
+         <button disabled={!isAvailable} onClick={() => this.props.addToOrder(this.props.index)} > {isAvailable ? 'Add to Order' : 'Sold out!'} </button>
+         <button onClick={this.props.deleteFish} >del</button>
       </li>
     )
   }
 }
-
 
 export default Fish;

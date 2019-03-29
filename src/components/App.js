@@ -4,6 +4,7 @@ import Order from './Order';
 import Inventory from './Inventory';
 import sampleFishes from '../sample-fishes';
 import Fish from './Fish';
+import base from '../base';
 
 class App extends React.Component {
 
@@ -13,7 +14,11 @@ class App extends React.Component {
   }
 
   // componentWillMount(){
-  //   this.loadSampleFishes();
+  //   const { params } = this.props.match;
+  //   this.ref = base.syncState(`${params.storeId}/fishes`, {
+  //     context: this,
+  //     state: 'fishes'
+  //   });
   // }
 
   addFish = fish => {
@@ -42,14 +47,25 @@ class App extends React.Component {
     this.setState({ order: order })
   }
 
+  deleteFish = ( fishKey, index )=> {
+    // take a copy of the existing state
+    const fishes = { ...this.state.fishes };
+    // add our new fish to that fishes variable
+    
+    const fishId = Object.keys(fishes);
+
+    // Object.keys(fishes).filter(fishKey => fishKey === fishKey.keys)
+
+    fishId.map((fishKey, index) => {
+      return fishKey === fishKey;
+    } )
+      
+    console.log(`${fishKey} ${index}`)
+  }
+
+
 
   render() {
-
-    // var Alert = ReactClass({
-    //   render = () => {
-    //     return <div className={"alert" + this.p} ></div>
-    //   }
-    // });
     return (
       <div className="catch-of-the-day" >
          <div className="menu">
@@ -57,11 +73,11 @@ class App extends React.Component {
             <ul className="fishes">
               {
                 /* dynamically passing  fishKey [fhKey] */
-                Object.keys(this.state.fishes).map(fhKey => <Fish key={fhKey} details={this.state.fishes[fhKey]} />)
+                Object.keys(this.state.fishes).map(fhKey => <Fish key={fhKey} index={fhKey} details={this.state.fishes[fhKey]} addToOrder={this.addToOrder}  deleteFish={this.deleteFish} />)
               }
             </ul>
          </div>
-         <Order />
+         <Order fishes={this.state.fishes} order={this.state.order} />
          <Inventory addFish={this.addFish} loadSampleFishes={this.loadSampleFishes}/> 
       </div>
     )
